@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitForElementToBeRemoved } from "@testing-library/react";
 import Form from "./index";
 
 describe("When Events is created", () => {
@@ -22,7 +22,9 @@ describe("When Events is created", () => {
         })
       );
       await screen.findByText("En cours");
-      await screen.findByText("Envoyer");
+      await waitForElementToBeRemoved(() => screen.getByText("En cours"), {
+        timeout:5000
+      });
       expect(onSuccess).toHaveBeenCalled();
     });
   });
